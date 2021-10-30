@@ -1,29 +1,64 @@
-import React, { Component } from 'react';
-import Profile from './components/Profile';
+import React, { Component } from 'react'
 
-class App extends Component {
-
-  constructor(props){
-    super(props)
-    this.state = {
-      shows: true
-    }
+class Profile extends Component {
+    state = {
+      shows: false,
+      Person :{
+      fullName: 'Emmanuel Omole',
+      bio: 'I am a solution provider',
+      imgSrc: 'Emmanuel.jpg',
+      profession: 'Software Engineer',
+      },
+      Time: 0
   }
 
-  handleClick=()=>this.setState({shows: false})
+
+  handleOpenProfile=()=>{
+    this.setState({
+      shows: true,
+      Person:{
+      fullName: 'Emmanuel Omole',
+      bio: 'I am a solution provider',
+      imgSrc: 'Emmanuel.jpg',
+      profession: 'Software Engineer'
+      }
+    })
+  }
+
+  handleClosedProfile=()=>{
+    this.setState({
+      shows: false,
+      Person:{
+      fullName: '',
+      bio: '',
+      imgSrc: '',
+      profession: ''
+      }
+    })
+  }
+
+  tick() {
+    this.setState(state => ({
+      Time: state.Time + 1
+    }));
+  }
+
+  componentDidMount() {
+    this.interval = setInterval(() => this.tick(), 1000);
+  }
 
   render(){
-  return (
-    <div className="App">
-      {this.state.shows ? (
-          <div className="mainDiv">
-            <Profile showState={this.state.shows} />
-          </div>
-        ) : null}
-      <button onClick={this.handleClick}>{this.state.shows ? "Hide" : "Show"}</button>
-    </div>
-  );
+    return(
+      <div>
+        <img src={this.state.Person.imgSrc} alt='img' />
+        <h3>{this.state.Person.fullName}</h3>
+        <h3>{this.state.Person.bio}</h3>
+        <h3>{this.state.Person.profession}</h3>
+        <p>This component was mounted {this.state.Time}s ago</p>
+        <button onClick={this.state.shows === 'true' ? this.handleOpenProfile: this.handleClosedProfile}>{this.state.shows === 'true' ? "Show" : "Hide"}</button>
+      </div>
+    )
   }
 }
 
-export default App;
+export default Profile
